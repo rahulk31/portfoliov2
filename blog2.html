@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/f07e51327e.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./blog2.css">
+    <title>Rahul | Destructuring</title>
+</head>
+<body>
+    <nav id="nav-bar">
+        <a href="./index.html"><h3>RAHUL</h3></a>
+        <ul>
+            <a href="./project.html"><li>PROJECTS</li></a>
+            <a href="./blogs.html"><li>BLOGS</li></a>
+        </ul>
+    </nav>
+
+
+    <!-- Start of Blog -->
+    <section id="blog">
+        <article>
+            <h1>Slice() & Splice() Array methods in Javascript.</h1>
+            <img src="./assets/blogs/Slice&Splice.png" alt="">
+            <h3>slice[startIndex, endIndex)</h3>
+            <p>Slice method is used to extract the part of array based on the start and end indexes passed as the parameter.</p>
+            <i>It returns the extracted part and does not modify the original array</i>
+            <p>The endIndex is optional, if not given it returns the elements till the end of the array as we can see in the example below.</p>
+            <pre>
+let arr = ['a', 'b', 'c', 'd' , 'e'];
+console.log(arr.slice(2));      // Output: [ 'c', 'd', 'e' ]
+            </pre>
+            <p>On the other hand if the endIndex is passed then the extracted part of array is returned right from the startIndex to the endIndex-1.</p>
+            <pre>
+let arr = ['a', 'b', 'c', 'd' , 'e'];
+console.log(arr.slice(2, 4));   // Output: [ 'c', 'd' ]
+            </pre>
+            <p>Negative index means that the index is starting from the right hand side. See the example below.</p>
+            <pre>
+let arr = ['a', 'b', 'c', 'd' , 'e'];
+console.log(arr.slice(-2, 4));   // Output: [ 'd' ]
+console.log(arr.slice(-2));      // Output: [ 'd', 'e' ]
+console.log(arr.slice(1, -2));   // Output: [ 'b', 'c' ]
+            </pre>
+            <i>Note:</i>
+            <p>In above example the index starts from -2 which is the second element from the right end, and goes till the (4-1)th index from the left end. Hence, the output is 'd'.
+            </p>
+            <p>In the second example, the start index is -2 which is again the second element from the right end and since the endIndex is not given it takes all the remaining element from -2 to the end of the array(left → right).</p>
+            <p>In the third example, the index starts from index 1 and ends at index -3 which is the third element from the right end. (Why -3? because we know it goes uptil endIndex -1 hence, it is (-2-1) which is -3).</p>
+            <h3>splice(startIndex, deleteCount, itemN)</h3>
+            <p>Splice() method is used to change the content of an existing array by deleting, adding or replacing elements in place.</p>
+
+            <p>Lets understand the parameters:</p>
+            <p>* startIndex states the starting index from where the deletion or insertion has to take place.</p>
+            <p>* deleteCount is the number of elements to delete from the startIndex(inclusive)
+            </p>
+            <p>* after the elements are deleted the number of items provided as itemN is inserted into the array in place.</p>
+            <i>Splice() method returns the deleted items from the array, but it also modifies the original array according to the rules, If no element is deleted then an empty array is returned.</i>
+            <p>Examples Codes:</p>
+            <P>* In the below example, startIndex is 1 and the deleteCount is also 1, so the splice() method will now count and delete 1 element from the startIndex which is inclusive and return in an array. Here, b is deleted and the item z is added at the index 1.</P>
+            <pre>
+let arr = ['a', 'b', 'c', 'd' , 'e'];
+console.log(arr.splice(1, 1, 'z'));
+console.log(arr);
+
+// Output:
+[ 'b' ]
+[ 'a', 'z', 'c', 'd', 'e' ]
+            </pre>
+            <p>In the below example, startIndex is 1 and the deleteCount is also 1, so the splice() method will now count and delete 1 element from the startIndex which is inclusive and return in an array. Here, b is deleted and the items y and z are added at the index 1 and 2 respectively.</p>
+            <pre>
+let arr = ['a', 'b', 'c', 'd' , 'e'];
+console.log(arr.splice(1, 1, 'y', 'z'));
+console.log(arr);
+
+// Output: 
+[ 'b' ]
+[ 'a', 'y', 'z', 'c', 'd', 'e' ]
+            </pre>
+            <p>In the below example, startIndex is 1 and the deleteCount is 2, so the splice() method will now count and delete 2 elements from the startIndex which is inclusive and return in an array. Here, b and c are deleted and the items y and z are added at the index 1 and 2 respectively.</p>
+            <pre>
+let arr = ['a', 'b', 'c', 'd' , 'e'];
+console.log(arr.splice(1, 2, 'y', 'z'));
+console.log(arr);
+
+// Output:
+[ 'b', 'c' ]
+[ 'a', 'y', 'z', 'd', 'e' ]
+            </pre>
+            <p>Some more self-explanatory examples:</p>
+            <pre>
+let arr = ['a', 'b', 'c', 'd' , 'e'];
+console.log(arr.splice(3, 2));
+console.log(arr);
+
+// Output:
+[ 'd', 'e' ]
+[ 'a', 'b', 'c' ]
+
+#####################################
+
+let arr = ['a', 'b', 'c', 'd' , 'e'];
+console.log(arr.splice(3, 0, 'r', 's'));
+console.log(arr);
+
+// Output:
+[]
+['a', 'b', 'c', 'r', 's', 'd', 'e']
+            </pre>
+            <h3>Points to remember about splice()</h3>
+            <p>* If the startIndex is greater than the length of the array then the start is set equal to the length of the array and no element is deleted or removed. Hence, acts as na adding function and adds as many elements provided in the itemN.</p>
+            <p>* If deleteCount is 0 or negative, then no elements are removed. In this case we should specify at least one new value.</p>
+            <p>* If we do not specify any elements, splice() will only remove elements from the array based on the deleteCount(only if it is greater than 0).</p>
+
+
+        </article>
+        <h1>Thank you for reading!</h1>
+    </section>
+
+
+    <!-- Start of Footer -->
+    <section id="footer" class="p2">
+        <a href="http://www.github.com/rahulk31" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+        <a href="http://www.twitter.com/thescubedr" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+        <a href="http://www.linkedin.com/in/thescubedr" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+    </section>
+</body>
+</html>

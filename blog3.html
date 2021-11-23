@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/f07e51327e.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./blog3.css">
+    <title>Rahul | Destructuring</title>
+</head>
+<body>
+    <nav id="nav-bar">
+        <a href="./index.html"><h3>RAHUL</h3></a>
+        <ul>
+            <a href="./project.html"><li>PROJECTS</li></a>
+            <a href="./blogs.html"><li>BLOGS</li></a>
+        </ul>
+    </nav>
+
+
+    <!-- Start of Blog -->
+    <section id="blog">
+        <article>
+            <h1>Call(), Apply() & Bind() functions in Javascript.</h1>            
+            <img src="./assets/blogs/CallApplyBind.png" alt="">
+            <p>These functions are usually used when we want to set the this keyword independent of how the function is being called in our code.</p>
+            <p>Lets understand this in a clear way with an example. Assume a flight company minimal object, it stores the
+            </p>
+            <ul>
+                <li>name of the flight</li>
+                <li>the iata code(location identifier code)</li>
+                <li>the bookings array and</li>
+                <li>has a method book that books the flight using the flight name and the name of the passenger as the arguments.</li>
+            </ul>
+            <pre>
+const airIndia = {
+    airline: 'Air India',
+    iataCode: 'AI3',
+    bookings: [],
+    book(flightNum, name) {
+        console.log(`${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`);
+        this.bookings.push({ flight: `${this.iataCode}${flightNum}`, name });
+    }
+}                
+            </pre>
+            <p>Now, to book a flight we can simply call the book method and pass in the passenger name and the flightNumber.</p>
+            <pre>
+airIndia.book(111, 'RahulK');
+airIndia.book(112, 'devtuber');
+
+// Output: 
+// RahulK booked a seat on Air India flight AI3111
+// devtuber booked a seat on Air India flight AI3112
+            </pre>
+            <p>Up until here, there was nothing to do with the call, apply and bind functions. But, now lets take it to the next step. Lets assume that AirIndia opens up a new subsidiary airline 'flyer'.</p>
+            <p>The object should have similar properties as to airIndia.</p>
+            <pre>
+const flyer = {
+    airline: 'Flyer',
+    iataCode: 'FF3',
+    bookings: [],
+    book(flightNum, name) {
+        console.log(`${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`);
+        this.bookings.push({ flight: `${this.iataCode}${flightNum}`, name });
+    }
+}
+
+// It will use the book method from the parent airline(AirIndia).                
+            </pre>
+            <p>So, here we would exploit the DRY principle if we re-wrote the book() method within the flyer object. How can we improve this?</p>
+            <h3>What happens when we try to use the book() from AirIndia object?</h3>
+            <pre>
+const bookTicket = airIndia.book;
+bookTicket(24, 'Rahul'); // error
+            </pre>
+            <p>* this will certainly give an error because when we store the book() method into the bookTicket, bookTicket no longer remains the method rather becomes the normal function whose this keyword points to undefined</p>
+            <h3>Things to remember:</h3>
+            <i>'this' always refers to an object.</i>
+            <i>'this' refers to an object which calls the function it contains.</i>
+            <i>In the 'global' context 'this' refers either to the 'window' object or is 'undefined' if the strict mode is on.
+            </i>
+            <h3>How to solve this?</h3>
+            <p>One way is to create a book function explicitly that takes in three arguments: airline object, passenger name, flight number and books the flight for any airline.</p>
+            <p>Second way is to set the value of this using either the call(), apply() or bind() methods while calling book() from AirIndia.</p>
+            <h3>Using Call(thisArg, ...parameters)</h3>
+            <i>The call() method sets the 'this' inside the function and immediately executes that function.</i>
+            <i>Syntax: function.call(thisArg, param1, param2...)</i>
+            <p>So, now instead of passing only the parameters asked in the bookTicket(), we can also pass the object to which the this should reference to using the call().</p>
+            <pre>
+const bookTicket = airIndia.book;
+bookTicket.call(flyer, 24, 'Rahul');
+
+// Output: Rahul booked a seat on Flyer flight FF224
+                </pre>
+                <h3>Using Apply(thisArg, [param1, param2...])</h3>
+                <p>Apply() method works similar to call(), it also sets the 'this' inside the function and immediately executes that function. Only difference is that it takes the arguments in the form of an array.</p>
+                <pre>
+const bookTicket = airIndia.book;
+bookTicket.apply(flyer, [24, 'Keyboard']);
+
+// Output: Keyboard booked a seat on Flyer flight FF224
+                </pre>
+                <h3>Using Bind(thisArg, optionalArguments)</h3>
+                <p>Bind() actually works similar to call() and apply() but has some differences. The main difference is that bind() method creates a new function that, when called, has its this keyword set to the provided value.</p>
+                <pre>
+const bookBind = airIndia.book.bind(flyer);
+bookBind(24, 'Rahul');
+
+// Output: Rahul booked a seat on Flyer flight FF224
+                </pre>
+                <p>Optionally, we can always provide the other arguments as well within the bind() method. We are allowed to pass in partial arguments too. Let make it clear through an example.</p>
+                <pre>
+const bookBind = airIndia.book.bind(flyer, 25);
+bookBind('Rahul');
+
+// Output: Rahul booked a seat on Flyer flight FF225
+                </pre>
+                <p>In the above code, we have optionally passed the flight number and not the name within the bind() method, which is perfectly fine.
+                </p>
+                <pre>
+const bookBind = airIndia.book.bind(flyer, 25, 'Rahul');
+bookBind();
+
+// Output: Rahul booked a seat on Flyer flight FF225                    
+                </pre>
+                <p>In the above code, we have passed both the flight number and the name within the bind() method, which is perfectly fine too.</p>
+
+
+        </article>
+        <h1>Thank you for reading!</h1>
+    </section>
+
+
+    <!-- Start of Footer -->
+    <section id="footer" class="p2">
+        <a href="http://www.github.com/rahulk31" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+        <a href="http://www.twitter.com/thescubedr" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+        <a href="http://www.linkedin.com/in/thescubedr" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+    </section>
+</body>
+</html>

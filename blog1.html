@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/f07e51327e.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./blog1.css">
+    <title>Rahul | Destructuring</title>
+</head>
+<body>
+    <nav id="nav-bar">
+        <a href="./index.html"><h3>RAHUL</h3></a>
+        <ul>
+            <a href="./project.html"><li>PROJECTS</li></a>
+            <a href="./blogs.html"><li>BLOGS</li></a>
+        </ul>
+    </nav>
+
+
+    <!-- Start of Blog -->
+    <section id="blog">
+        <article>
+            <h1>Destructuring Arrays and Objects</h1>
+            <img src="./assets/blogs/Destructuring.png" alt="">
+            <h3>Definition</h3>
+            <p>There is no concise definition than on MDN for destructuring assignments:</p>
+            <p><em>The destructuring assignment syntax is a JavaScript expression that makes it possible to unpack values from arrays, or properties from objects, into distinct variables.</em></p>
+            <h3>Array Destructuring</h3>
+            <p><i>We use 'square brackets : [ ]' to destructure arrays.</i></p>
+            <hr>
+            <p>Lets look at different scenarios where we can make use of destructuring assignments, Consider an array with three elements and now you want to create three different variables with the values in array respectively. Old way would be to assign each new variable the values from array using the indexes.</p>
+            <pre>
+const arr = [1, 2, 3];
+const a = arr[0]; // a = 1
+const b = arr[1]; // b = 2
+const c = arr[2]; // c = 3
+            </pre>
+            <p>But, the effort can be drastically reduced to perform the same task using the destructuring assignment.</p>
+            <pre>
+const arr = [1, 2, 3];
+const [a, b, c] = arr;
+// a = 1, b = 2, c = 3
+            </pre>
+            <i>Note: Original array is not affected, it remains as it is. Only the assignment operation takes place from left to right.</i>
+            <p>In case, we only required two elements from the array we can use the same syntax with two variables. Rest values in array exceeding two elements will be discarded.</p>
+            <p>We can aslo skip the middle elements as per requirement using the blank space for that element from array. See the example for better understanding:</p>
+            <pre>
+const arr = [1, 2, 3, 4];
+// a = 1, b = 2
+const [a, b] = arr;
+// x = 2, y = 4
+const [ , x,  , y] = arr;                
+            </pre>
+            <h3>Swapping Values using destructuring</h3>
+            <p>Traditionally, we can swap values using a temporary variable explicitly and then assigning and reassigning values between three variables, But now we can directly assign values using destructuring, examples below:</p>
+            <pre>
+let a = 10, b = 20;
+
+// Old way
+let temp = a;
+a = b;
+b = temp;   // a = 20, b = 10
+
+// Using destructuring
+[a, b] = [b, a];   // a = 20, b = 10
+            </pre>
+            <h3>Receiving more than one values from a function call</h3>
+            <p>Let us consider an object restaurant with few properties:</p>
+            <pre>
+const restaurant = {
+    name: 'La\' Pinoz Pizza',
+    location: 'Ghaziabad',
+    categories: ['Italian', 'Vegetarian', 'Non-Vegetarian', 'Organic'],
+    starterMenu: ['Garlic Bread', 'Fries', 'Pastries'],
+    mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+    order: function(starterIndex, mainIndex) {
+        return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+    }
+}                
+            </pre>
+            <p>The order property of the restaurant object is a function that takes in two arguments and return an Array containing two values. We can use destructuring here and assign the elements of Array directly to the variables.</p>
+            <pre>
+const [starter, mainCourse] = restaurant.order(2,1);
+console.log(starter, mainCourse);
+// output: Pastries Pasta
+            </pre>
+            <h3>Nested Destructuring</h3>
+            <p>Quite simple as the name suggests, destructuring arrays within arrays. Considering an array with nested array: [1, 2, [3, 4]]. When we assign values of a,b,c with this array then each gets the individual element assigned, i.e. a = 1, b = 2, c = [3,4]. If we want to separate out values from the array c then we can use the similar destructuring syntax and achieve it.</p>
+            <pre>
+const nested = [1, 2, [3, 4]];
+const [a, b, c] = nested;  // a = 1, b = 2, c = [3, 4]
+const [x, , [y, z]] = nested; // x = 1, y = 3, z = 4
+            </pre>
+            <h3>Default Values</h3>
+            <p>If we have no idea about the data contained in the incoming array, then the default value assigned to the variables is "undefined". Lets see an example and understand:</p>
+            <pre>
+const unknownArray = [1, 5, 9];
+const [a, b, c, d] = unknownArray;
+console.log(a,b,c,d);
+// Output: 1 5 9 undefined
+            </pre>
+            <h3>Object Destructuring</h3>
+            <i>We use 'Curly braces: { }' to destructure objects.We have to provide the variable names that exactly match the property names in the object. (Although we will also see a way how we can use different variable names).</i>
+            <p>Lets consider the similar restaurant object as above with few more properties:</p>
+            <pre>
+const restaurant = {
+    nameOfRestaurant: 'La\' Pinoz Pizza',
+    location: 'Ghaziabad',
+    categories: ['Italian', 'Vegetarian', 'Non-Vegetarian', 'Organic'],
+    starterMenu: ['Garlic Bread', 'Fries', 'Pastries'],
+    mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+    order: function(starterIndex, mainIndex) {
+        return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+    },
+    openingHours: {
+        thu: {
+            open: 11,
+            close: 22
+        },
+        fri: {
+            open: 10,
+            close: 23
+        },
+        sat: {
+            open: 11,
+            close: 23
+        }
+    }
+}                
+            </pre>
+            <p>We can destructure the restaurant object using its property names, now here the order of properties does not matter as it can be accessed as long as the property name matches.</p>
+            <pre>
+const {nameOfRestaurant, openingHours, mainMenu} = restaurant;
+console.log('Name: ', nameOfRestaurant);
+console.log('Opening Hours: ', openingHours);
+console.log('Main Menu: ', mainMenu);
+
+// Output:
+// Name:  La' Pinoz Pizza
+// Opening Hours:  {
+//   thu: { open: 11, close: 22 },
+//   fri: { open: 10, close: 23 },
+//   sat: { open: 11, close: 23 }
+// }
+// Main Menu:  [ 'Pizza', 'Pasta', 'Risotto' ]
+            </pre>
+            <h3>Using different variable names</h3>
+            <p>Even if we want to change the name of variables different to property names, we will still need to know the property names ahead of time. So it is always a good practise to look up the incoming object. Okay, so we can give an alias to the property names using colon(:).</p>
+            <pre>
+const {nameOfRestaurant: name, openingHours: timing, mainMenu: menu} = restaurant;
+console.log('Name: ', name);
+console.log('Opening Hours: ', timing);
+console.log('Main Menu: ', menu);
+// We get the output similar to the above output.
+            </pre>
+            <h3>Setting default values</h3>
+            <p>We can always assign a default value to the variables while destructuring the objects. If the values are present in the object then it is assigned to the variable on the other hand if it is not present then the default value is assigned to the variable.</p>
+            <pre>
+const {nameOfRestaurant: name = 'PizzaHut', menu = [ ]} = restaurant;
+// Lets assume that the restaurant object has no property with name 'nameOfRestaurant',
+// In this case the name becomes 'PizzaHut'.
+// On the other hand there is no menu property so menu is assigned with empty array.
+            </pre>
+            <h3>Mutating values</h3>
+            <p>While mutating values using object destructuring we should be careful about the curly braces, as javascript will expect a code block as soon as it encounters the open curly brace.</p>
+            <i>To resolve this situation we wrap the destructuring code within paranthesis.</i>
+            <pre>
+let a = 11;
+let b = 23;
+let obj = { a: 120, b: 34 };
+({ a, b } = obj);  // Important line
+console.log(a, b);  // a = 120, b = 34
+            </pre>
+
+        </article>
+        <h1>Thank you for reading!</h1>
+    </section>
+
+
+    <!-- Start of Footer -->
+    <section id="footer" class="p2">
+        <a href="http://www.github.com/rahulk31" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+        <a href="http://www.twitter.com/thescubedr" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+        <a href="http://www.linkedin.com/in/thescubedr" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+    </section>
+</body>
+</html>
