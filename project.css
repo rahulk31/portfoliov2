@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;800&family=Roboto&display=swap');
+
+:root {
+    --blue-bg: #232946;
+    --light-blue-bg: #d4d8f0;
+    --blue-text: #b8c1ec;
+    --pink: #eebbc3;
+    --card-bg: #fffffe;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--blue-bg);
+    color: var(--blue-text);
+}
+
+.p2 {
+    padding: 2rem;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+li {
+    list-style-type: none;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem 3rem;
+    box-shadow: 1px 1px 10px 1px var(--blue-text);
+    
+}
+
+nav h3 {
+    color: var(--card-bg);
+    font-size: 25px;
+    font-weight: 800;
+}
+
+nav ul {
+    display: flex;
+    justify-content: space-between;
+}
+
+nav ul li {
+    padding: 0.5rem 1rem;
+    color: var(--pink);
+}
+/* --------------------- */
+
+h1 {
+    font-size: 30px;
+    color: var(--pink);
+    text-align: center;
+    padding: 1rem;
+}
+
+p {
+    text-align: center;
+}
+
+.flex-btn {
+    display: flex;
+    justify-content: center;
+}
+
+.flex-btn > a {
+    margin: 1rem;
+}
+
+#projects ul li {
+    padding: 2rem;
+}
+
+.blue-h1 {
+    color: var(--blue-bg);
+}
+
+
+#projects li:nth-child(odd) {
+    background-color: var(--light-blue-bg);
+    padding: 2rem;
+    color: var(--blue-bg);
+}
+
+.btn {
+    border: none;
+    border-radius: 5px;
+    color: var(--blue-bg);
+    background-color: var(--pink);
+    padding: 0.5rem 1rem;
+    text-transform: lowercase;
+    font-size: 17px;
+    display: block;
+    cursor: pointer;
+    margin: 1rem auto;
+}
+
+img {
+    display: block;
+    margin: 1rem auto;
+}
+
+#footer {
+    display: flex;
+    justify-content: center;
+    background-color: var(--light-blue-bg);
+}
+
+#footer i {
+    color: var(--blue-bg);
+    font-size: 30px;
+    margin: 0 2rem;
+}
